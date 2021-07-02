@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        gap: 5px;
+    }
+
+    input {
+        border: 2px solid red;
+        border-radius: 5px;
+        margin-left: 4px;
+        background-color: rgb(34, 34, 34);
+        color: white;
+        padding: 5px;
+    }
+
+    textarea {
+        border: 2px solid red;
+        border-radius: 5px;
+        margin-left: 4px;
+        background-color: rgb(34, 34, 34);
+        color: white;
+    }
+
+    #btn {
+        border: 2px solid red;
+        border-radius: 5px;
+        margin-left: 4px;
+        background-color: rgb(34, 34, 34);
+        color: white;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .div_container {
+        display: flex;
+        /* justify-content: center; */
+    }
+
+    .container {
+        gap: 10px;
+        display: flex;
+        /* justify-content: center; */
+        flex-direction: column;
+    }
+
+    .btn {
+        border: 2px solid red;
+        border-radius: 5px;
+        margin-left: 4px;
+        background-color: rgb(34, 34, 34);
+        color: white;
+        padding: 5px;
+        width: 259px;
+        cursor: pointer;
+    }
+    #row{
+        display: flex;
+        border: 2px solid red;
+        border-radius: 5px;
+        margin-left: 4px;
+        background-color: rgb(34, 34, 34);
+        color: white;
+        padding: 2px;
+        width: 259px;
+    }
+    .rowSec{
+        border: 2px solid rgb(172, 50, 50);
+        border-radius: 5px;
+        margin-left: 4px;
+        background-color: rgb(34, 34, 34);
+        color: white;
+        padding: 5px;
+        width: fit-content;
+        /* width: 259px; */
+    }
+
+</style>
+
+
+<body>
+    <div class="container">
+        <div class="div_container">
+            <input id="end" type="text" placeholder="your endpoint here a bradar">
+            <button id="btn" onclick="araSchema(),hakuna(),copy()">sir 3allah</button>
+        </div>
+        <textarea name="" id="schema" cols="30" rows="17"></textarea>
+        <button class="btn" onclick="copy()">copy to clipboard</button>
+        <div id="row">
+
+        </div>
+    </div>
+
+    <script>
+        // document.getElementById("end").value
+
+        function copy() {
+            let schema = document.getElementById("schema")
+            schema.select();
+            schema.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+        }
+
+        function hakuna() {
+            endValue().map(e =>
+                document.getElementById("row").innerHTML += `
+                <div class="rowSec">${e}<div>
+        `
+            )
+        }
+
+
+        function endValue() {
+            let EndPoint = document.getElementById("end").value;
+            x = EndPoint.replace(`http://localhost/`, '')
+            return x.split(`/`);
+        }
+
+        async function araSchema() {
+            let EndPoint = document.getElementById("end").value;
+            console.log(EndPoint);
+            let schema = document.getElementById("schema");
+            fetch(EndPoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+
+                })
+            })
+                .then(response => response.text())
+                .then(result => {
+                    x = (result.split('Stack trace').shift().split('Undefined property: stdClass::'))
+                    y = x.map(e => e.split(' ')[0]).reverse().slice(0, x.length - 1)
+                    z = y.map(e => `"${e.replace(/\$/g, '')}"`).join(`:"random",\n`)
+                    hell = "{\n" + z + `:"random"\n}`
+                    schema.value = hell
+                    console.log("{\n" + z + `:"random"\n}`);
+                })
+        }
+    </script>
+</body>
+
+</html>
